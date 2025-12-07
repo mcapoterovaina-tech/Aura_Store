@@ -1,0 +1,514 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html b:css='false' b:defaultwidgetversion='2' b:layoutsVersion='3' b:responsive='true' expr:dir='data:blog.languageDirection' expr:lang='data:blog.locale' xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+  <head>
+    <meta content='width=device-width, initial-scale=1' name='viewport'/>
+    <meta name="theme-color" content="#ffffff" />
+    <title><data:view.title.escaped/></title>
+    
+    <b:include data='blog' name='all-head-content'/>
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+
+    <!-- Tailwind Config -->
+    <script>
+      //<![CDATA[
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+            },
+            colors: {
+              'apple-blue': '#0071e3',
+              'apple-dark': '#1d1d1f',
+              'apple-gray': '#f5f5f7',
+              'night-bg': '#000000',
+              'night-card': '#1c1c1e',
+            },
+            boxShadow: {
+              'soft': '0 4px 20px rgba(0,0,0,0.03)',
+              'hover': '0 10px 40px rgba(0,0,0,0.08)',
+            }
+          }
+        }
+      }
+      //]]>
+    </script>
+
+    <b:skin><![CDATA[
+      /* Reset & Base Styles */
+      .widget { margin: 0; padding: 0; line-height: inherit; }
+      .section { margin: 0; padding: 0; }
+      .navbar { display: none !important; }
+      
+      /* Hide Scrollbar */
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      
+      body { 
+        font-family: 'Inter', sans-serif; 
+        -webkit-font-smoothing: antialiased; 
+      }
+      
+      /* Transitions */
+      body, div, nav, footer, button, span, p, h1, h2, h3, a {
+        transition-property: color, background-color, border-color, transform, opacity;
+        transition-duration: 200ms;
+      }
+
+      /* Hide Raw Content Container */
+      #raw-post-payload { display: none !important; }
+      
+      /* Fix for images inside descriptions getting processed twice */
+      #ui-app-description img { display: none !important; }
+    ]]></b:skin>
+  </head>
+
+  <body class="bg-white dark:bg-black text-apple-dark dark:text-white selection:bg-blue-100 selection:text-blue-900">
+    
+    <!-- Navbar -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-black/80 backdrop-blur-xl border-b border-gray-200/50 dark:border-white/10 transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          
+          <!-- Logo -->
+          <div class="flex items-center">
+             <b:section id='header-logo' maxwidgets='1' showaddelement='no'>
+               <b:widget id='Header1' locked='true' title='Aura Store' type='Header'>
+                 <b:includable id='main'>
+                    <a expr:href='data:blog.homepageUrl' class="text-xl font-bold tracking-tight flex items-center group">
+                      <span class="bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-700 dark:from-white dark:to-slate-300">
+                        <data:title/>
+                      </span>
+                      <span class="text-slate-400 font-light ml-1 group-hover:text-apple-blue transition-colors">Store</span>
+                    </a>
+                 </b:includable>
+               </b:widget>
+             </b:section>
+          </div>
+
+          <!-- Desktop Menu -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="/" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-apple-blue transition-colors">Discover</a>
+            <a href="/search" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-apple-blue transition-colors">Categories</a>
+            <a href="/search/label/Arcade" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-apple-blue transition-colors">Arcade</a>
+            <a href="/search/label/Notice" class="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-apple-blue transition-colors">Notice</a>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-4">
+            <button id="theme-toggle" class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-white/10 transition-colors text-slate-500 dark:text-slate-400">
+              <svg id="theme-icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+              <svg id="theme-icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+            </button>
+            <button onclick="toggleSearch()" class="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/10 rounded-full transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="fixed inset-0 z-[60] bg-white/95 dark:bg-black/95 backdrop-blur-xl hidden animate-fade-in">
+      <div class="max-w-3xl mx-auto px-4 pt-24">
+        <div class="flex items-center gap-4 mb-8">
+          <div class="relative flex-1">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <form action="/search" method="get">
+               <input type="text" name="q" placeholder="Search..." class="w-full bg-slate-100 dark:bg-white/10 border-none rounded-2xl py-4 pl-12 pr-4 text-xl font-medium placeholder:text-slate-400 focus:ring-2 focus:ring-apple-blue focus:bg-white dark:focus:bg-black transition-all outline-none text-slate-900 dark:text-white" />
+            </form>
+          </div>
+          <button onclick="toggleSearch()" class="text-apple-blue font-medium hover:underline text-lg">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-16 min-h-screen">
+      
+      <!-- Hero (Solo en Home) -->
+      <b:if cond='data:view.isHomepage'>
+        <b:section id='hero-section' maxwidgets='1' showaddelement='yes'>
+           <b:widget id='HTML1' locked='false' title='Hero Section' type='HTML'>
+             <b:widget-settings>
+               <b:widget-setting name='content'>
+                 <![CDATA[
+                 <section class="relative pt-24 pb-20 px-4 overflow-hidden">
+                  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+                    <div class="relative z-10 text-center md:text-left">
+                      <span class="inline-block py-1.5 px-4 rounded-full bg-blue-50/80 dark:bg-blue-500/20 backdrop-blur-sm border border-blue-100 dark:border-blue-500/30 text-apple-blue dark:text-blue-400 text-[11px] font-bold uppercase tracking-widest mb-8">
+                        Featured
+                      </span>
+                      <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-slate-900 dark:text-white mb-8 leading-[1.05]">
+                        Design <br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-br from-slate-400 to-slate-200 dark:from-slate-500 dark:to-slate-700">
+                          Redefined.
+                        </span>
+                      </h1>
+                      <p class="text-lg md:text-xl text-slate-500 dark:text-slate-400 mb-10 max-w-lg mx-auto md:mx-0">
+                        Curated collection of premium assets for your next big project.
+                      </p>
+                    </div>
+                    <div class="relative mt-12 md:mt-0 group">
+                       <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-100 dark:bg-blue-900/30 rounded-full blur-[80px] opacity-60 -z-10 animate-pulse"></div>
+                       <img src="https://picsum.photos/id/20/800/800" class="rounded-[2.5rem] shadow-2xl rotate-2 group-hover:rotate-0 transition-transform duration-700 max-w-[85%] mx-auto border border-white/50 dark:border-white/10 object-cover"/>
+                    </div>
+                  </div>
+                </section>
+                 ]]>
+               </b:widget-setting>
+             </b:widget-settings>
+             <b:includable id='main'>
+               <data:content/>
+             </b:includable>
+           </b:widget>
+        </b:section>
+      </b:if>
+
+      <!-- Main Content -->
+      <main id="main-posts" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20">
+        <b:section id='main' showaddelement='yes'>
+          <b:widget id='Blog1' locked='true' title='Blog Posts' type='Blog'>
+            
+            <b:includable id='main' var='this'>
+              <b:if cond='!data:view.isHomepage'>
+                <div class="mb-10 pt-8">
+                  <h2 class="text-3xl font-bold text-slate-900 dark:text-white capitalize"><data:view.title/></h2>
+                </div>
+              </b:if>
+
+              <!-- GRID VIEW (Home & Categories) -->
+              <b:if cond='data:view.isMultipleItems'>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <b:loop values='data:posts' var='post'>
+                    
+                    <!-- App Card -->
+                    <div class="app-card group flex flex-col p-5 rounded-[2rem] bg-white dark:bg-night-card border border-gray-100 dark:border-white/5 transition-all duration-300 hover:shadow-hover hover:-translate-y-1 cursor-pointer h-full relative overflow-hidden" onclick="window.location.href=this.querySelector('a.app-link').href">
+                        
+                      <!-- Metadata oculto para el JS del Grid -->
+                      <div class="hidden-meta hidden">
+                        <b:loop values='data:post.labels' var='label'>
+                          <span class="meta-label"><data:label.name/></span>
+                        </b:loop>
+                      </div>
+
+                      <div class="flex items-start justify-between mb-5 relative z-10">
+                        <b:if cond='data:post.firstImageUrl'>
+                          <img expr:src='data:post.firstImageUrl' class="w-[5.5rem] h-[5.5rem] rounded-[1.25rem] shadow-sm object-cover bg-gray-100 dark:bg-white/10 group-hover:shadow-md transition-shadow"/>
+                        <b:else/>
+                          <div class="w-[5.5rem] h-[5.5rem] rounded-[1.25rem] bg-gray-200 dark:bg-white/10 flex items-center justify-center text-xs text-slate-400">No Icon</div>
+                        </b:if>
+                      </div>
+                      
+                      <div class="flex-1 mb-5 relative z-10">
+                        <h3 class="font-semibold text-[1.1rem] text-slate-900 dark:text-white leading-tight mb-1.5 line-clamp-1"><data:post.title/></h3>
+                        <a expr:href='data:post.url' class="app-link hidden"></a>
+                        <p class="text-[0.9rem] text-slate-500 dark:text-slate-400 font-medium mb-1 app-category">App</p>
+                        <p class="text-xs text-slate-400 line-clamp-2"><data:post.snippet/></p>
+                      </div>
+
+                      <div class="flex items-center justify-between mt-auto pt-5 border-t border-gray-50/50 dark:border-white/5 relative z-10">
+                        <div class="flex items-center text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2 py-1 rounded-full">
+                          <span class="text-xs text-slate-700 dark:text-amber-200 font-bold ml-1 app-rating">4.5</span>
+                        </div>
+                        <button class="font-bold text-[11px] uppercase tracking-wide px-5 py-2 bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 text-blue-600 dark:text-blue-400 rounded-full transition-colors app-price-btn">GET</button>
+                      </div>
+                    </div>
+
+                  </b:loop>
+                </div>
+                <div class="mt-16 text-center">
+                  <b:include name='nextPageLink'/>
+                </div>
+
+              <!-- SINGLE POST VIEW (Detalle de App) -->
+              <b:else/>
+                <div class="max-w-5xl mx-auto app-detail-context">
+                    
+                    <!-- Contenedor con el HTML "sucio" de Blogger (se ocultará y procesará) -->
+                    <div id="raw-post-payload">
+                      <data:post.body/>
+                    </div>
+
+                    <!-- Metadata (Etiquetas) -->
+                    <div class="hidden-meta hidden">
+                        <b:loop values='data:post.labels' var='label'>
+                          <span class="meta-label"><data:label.name/></span>
+                        </b:loop>
+                    </div>
+
+                    <!-- UI LIMPIA QUE EL JS RELLENARÁ -->
+                    <div class="flex flex-col md:flex-row gap-10 mb-16 animate-fade-in">
+                      <!-- Icono -->
+                      <img id="ui-app-icon" src="" class="w-32 h-32 md:w-48 md:h-48 rounded-[2.5rem] shadow-soft border border-gray-100 dark:border-white/10 object-cover bg-gray-100 dark:bg-white/5"/>
+                      
+                      <div class="flex-1 flex flex-col justify-between py-2">
+                        <div>
+                          <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-3 leading-tight"><data:post.title/></h1>
+                          <p id="ui-app-tagline" class="text-xl text-slate-500 dark:text-slate-400 font-medium mb-4">Premium Collection</p>
+                          <div class="flex items-center gap-2 text-sm text-apple-blue font-semibold bg-blue-50 dark:bg-blue-500/10 w-fit px-3 py-1 rounded-full">
+                            <span class="ui-app-category-detail">App</span> <span class="text-slate-300">&#8226;</span> <span>4+</span>
+                          </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 mt-8 md:mt-0">
+                           <button id="ui-main-download-btn" class="bg-apple-blue text-white hover:bg-blue-600 px-10 py-4 text-lg font-bold rounded-full shadow-lg shadow-blue-500/20 active:scale-95 transition-all min-w-[160px]">
+                             <span>GET</span>
+                           </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Carrusel de Capturas -->
+                    <div id="ui-preview-section" class="mb-16 hidden">
+                      <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Preview</h2>
+                      <div id="ui-screenshots-container" class="flex gap-6 overflow-x-auto pb-8 -mx-4 px-4 sm:mx-0 sm:px-0 no-scrollbar snap-x scroll-pl-4">
+                         <!-- JS inyectará imágenes aquí -->
+                      </div>
+                    </div>
+
+                    <!-- Descripción e Información -->
+                    <div class="grid md:grid-cols-3 gap-16 mb-20">
+                      <div class="md:col-span-2">
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-6">Description</h2>
+                        <div id="ui-app-description" class="text-slate-600 dark:text-slate-300 leading-8 text-lg">
+                          <!-- JS inyectará la descripción limpia aquí -->
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <div class="bg-gray-50/50 dark:bg-white/5 rounded-3xl p-8 border border-gray-100 dark:border-white/5">
+                          <h3 class="font-semibold text-slate-900 dark:text-white mb-6 text-xl">Information</h3>
+                          <dl class="space-y-5 text-sm">
+                            <div class="flex justify-between py-3 border-b border-gray-200/60 dark:border-white/10">
+                              <dt class="text-slate-500 dark:text-slate-400">Developer</dt>
+                              <dd class="text-slate-900 dark:text-white font-medium" id="ui-info-dev">Unknown</dd>
+                            </div>
+                            <div class="flex justify-between py-3 border-b border-gray-200/60 dark:border-white/10">
+                              <dt class="text-slate-500 dark:text-slate-400">Size</dt>
+                              <dd class="text-slate-900 dark:text-white font-medium" id="ui-info-size">--</dd>
+                            </div>
+                            <div class="flex justify-between py-3">
+                              <dt class="text-slate-500 dark:text-slate-400">Compatibility</dt>
+                              <dd class="text-slate-900 dark:text-white font-medium" id="ui-info-compat">--</dd>
+                            </div>
+                          </dl>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </b:if>
+            </b:includable>
+          </b:widget>
+        </b:section>
+      </main>
+      
+      <!-- Footer -->
+      <footer class="bg-gray-50 dark:bg-night-card pt-20 pb-12 border-t border-gray-200 dark:border-white/10">
+         <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="text-slate-400 text-xs">&#169; 2024 Aura Store. All rights reserved.</p>
+         </div>
+      </footer>
+    </div>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+    //<![CDATA[
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Inicializar Tema
+        const html = document.documentElement;
+        const toggle = document.getElementById('theme-toggle');
+        const sun = document.getElementById('theme-icon-sun');
+        const moon = document.getElementById('theme-icon-moon');
+        
+        if (localStorage.getItem('aura-theme') === 'dark' || 
+           (!localStorage.getItem('aura-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            if(sun) sun.classList.remove('hidden');
+            if(moon) moon.classList.add('hidden');
+        }
+
+        if(toggle) {
+            toggle.addEventListener('click', () => {
+                html.classList.toggle('dark');
+                const isDark = html.classList.contains('dark');
+                localStorage.setItem('aura-theme', isDark ? 'dark' : 'light');
+                if(isDark) {
+                    sun.classList.remove('hidden');
+                    moon.classList.add('hidden');
+                } else {
+                    sun.classList.add('hidden');
+                    moon.classList.remove('hidden');
+                }
+            });
+        }
+
+        // 2. Función Búsqueda
+        window.toggleSearch = () => {
+            const el = document.getElementById('search-overlay');
+            if(el) {
+                el.classList.toggle('hidden');
+                if(!el.classList.contains('hidden')) {
+                    const inp = el.querySelector('input');
+                    if(inp) setTimeout(() => inp.focus(), 100);
+                }
+            }
+        };
+
+        // 3. LÓGICA PRINCIPAL: GRID vs DETALLE
+        const detailContext = document.querySelector('.app-detail-context');
+        
+        if (detailContext) {
+            // --- MODO DETALLE (POST) ---
+            const rawContainer = document.getElementById('raw-post-payload');
+            if (!rawContainer) return;
+
+            // A. Procesar Imágenes (Icono y Carrusel)
+            const imgs = rawContainer.querySelectorAll('img');
+            if (imgs.length > 0) {
+                // Icono = Primera imagen
+                const iconEl = document.getElementById('ui-app-icon');
+                if (iconEl) iconEl.src = imgs[0].src;
+
+                // Carrusel = Todas las imágenes
+                const carousel = document.getElementById('ui-screenshots-container');
+                const previewSec = document.getElementById('ui-preview-section');
+                
+                imgs.forEach(img => {
+                    const slide = document.createElement('img');
+                    slide.src = img.src;
+                    slide.className = "h-[300px] md:h-[450px] rounded-[1.75rem] shadow-soft snap-center border border-gray-100 dark:border-white/10 object-cover shrink-0 select-none bg-gray-100 dark:bg-white/5";
+                    if(carousel) carousel.appendChild(slide);
+                });
+                
+                if(previewSec) previewSec.classList.remove('hidden');
+            }
+
+            // B. Procesar Descripción (Buscar clase específica o todo el texto)
+            const uiDesc = document.getElementById('ui-app-description');
+            const sourceDesc = rawContainer.querySelector('.tm-single-desc__wrap');
+            
+            if (uiDesc) {
+                if (sourceDesc) {
+                    uiDesc.innerHTML = sourceDesc.innerHTML;
+                } else {
+                    // Fallback: Si no encuentra la clase, coge todo el HTML del post (menos lo que ya procesamos)
+                    uiDesc.innerHTML = rawContainer.innerHTML; 
+                }
+                
+                // LIMPIEZA DE ESTILOS INLINE (Crucial para Dark Mode)
+                uiDesc.querySelectorAll('*').forEach(el => {
+                    el.removeAttribute('style'); // Quita background: white, color: black, etc.
+                    el.classList.add('mb-4', 'leading-relaxed'); 
+                });
+                
+                // Ocultar elementos que no queremos en la descripción (como el bloque de info duplicado)
+                const infoInDesc = uiDesc.querySelector('.info-section');
+                if(infoInDesc) infoInDesc.style.display = 'none';
+                const dlBtnInDesc = uiDesc.querySelector('.item-download');
+                if(dlBtnInDesc) dlBtnInDesc.style.display = 'none';
+            }
+
+            // C. Procesar Info (Developer, Size, etc)
+            const sourceInfo = rawContainer.querySelector('.info-section');
+            if (sourceInfo) {
+                const listItems = sourceInfo.querySelectorAll('li');
+                const devEl = document.getElementById('ui-info-dev');
+                const sizeEl = document.getElementById('ui-info-size');
+                const compatEl = document.getElementById('ui-info-compat');
+
+                listItems.forEach(li => {
+                    const txt = li.textContent;
+                    const val = txt.split(':')[1]?.trim();
+                    if(!val) return;
+                    
+                    if (txt.toLowerCase().includes('developer') && devEl) devEl.textContent = val;
+                    if (txt.toLowerCase().includes('size') && sizeEl) sizeEl.textContent = val;
+                    if (txt.toLowerCase().includes('compatibility') && compatEl) compatEl.textContent = val;
+                });
+            }
+
+            // D. Procesar Botón de Descarga y Precio
+            const dlBtn = document.getElementById('ui-main-download-btn');
+            const sourceLink = rawContainer.querySelector('a.item-download');
+            
+            // Leer etiquetas para el precio
+            const metaDiv = document.querySelector('.hidden-meta');
+            let priceLabel = 'GET';
+            let categoryLabel = 'App';
+            
+            if(metaDiv) {
+                const labels = metaDiv.querySelectorAll('.meta-label');
+                labels.forEach(l => {
+                    const txt = l.textContent.trim().toLowerCase();
+                    if(txt.startsWith('price:')) {
+                        const p = txt.split(':')[1];
+                        priceLabel = (p === '0' || p === 'free') ? 'GET' : '$' + p;
+                    } else if(!txt.includes(':') && txt !== 'notice') {
+                        categoryLabel = l.textContent;
+                    }
+                });
+            }
+
+            // Actualizar UI Botón y Categoría
+            if(dlBtn) {
+                const span = dlBtn.querySelector('span');
+                if(span) span.textContent = priceLabel;
+                
+                if(sourceLink) {
+                    dlBtn.onclick = (e) => {
+                        e.preventDefault();
+                        window.open(sourceLink.href, '_blank');
+                    };
+                } else {
+                     // Si no hay link, deshabilitar visualmente
+                     dlBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                }
+            }
+            
+            const catDetail = document.querySelector('.ui-app-category-detail');
+            if(catDetail) catDetail.textContent = categoryLabel;
+
+        } else {
+            // --- MODO GRID (HOME) ---
+            // Hidratar tarjetas con datos de etiquetas
+            document.querySelectorAll('.app-card').forEach(card => {
+                const meta = card.querySelector('.hidden-meta');
+                if(!meta) return;
+                
+                let price = 'GET';
+                let rating = '4.5';
+                let cat = 'App';
+                
+                meta.querySelectorAll('.meta-label').forEach(l => {
+                    const t = l.textContent.trim().toLowerCase();
+                    if(t.startsWith('price:')) {
+                         const p = t.split(':')[1];
+                         price = (p === '0' || p === 'free') ? 'GET' : '$' + p;
+                    } else if(t.startsWith('rating:')) rating = t.split(':')[1];
+                    else if(!t.includes(':') && t !== 'notice') cat = l.textContent;
+                });
+
+                const pBtn = card.querySelector('.app-price-btn');
+                if(pBtn) pBtn.textContent = price;
+                
+                const rEl = card.querySelector('.app-rating');
+                if(rEl) rEl.textContent = rating;
+                
+                const cEl = card.querySelector('.app-category');
+                if(cEl) cEl.textContent = cat;
+            });
+        }
+    });
+    //]]>
+    </script>
+  </body>
+</html>

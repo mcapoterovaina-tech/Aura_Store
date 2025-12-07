@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS catalogos (
+  id SERIAL PRIMARY KEY,
+  contenido JSONB NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS productos (
+  id SERIAL PRIMARY KEY,
+  contenido JSONB NOT NULL
+);
