@@ -17,7 +17,7 @@ const pool = new Pool({
 // Middleware
 app.use(helmet()); // Security headers
 app.use(cors({
-    origin: 'http://localhost:5173', // Allow frontend origin
+    origin: process.env.CORS_ORIGIN || 'http://localhost:5173', // Allow frontend origin from env or default to localhost
     credentials: true // Allow cookies if needed
 }));
 app.use(morgan('dev')); // Logging
